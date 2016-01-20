@@ -5,64 +5,97 @@
 "██║     ██████╔╝███████║     ██║███████╗
 "╚═╝     ╚═════╝ ╚══════╝     ╚═╝╚══════╝
 
+" ==========VUNDLE==========
+"
 
 colorscheme badwolf
 
-syntax enable "enable synthax processing
+set nocompatible									" be iMproved, required
+filetype off										" required
 
-set tabstop=4 "number of visual spaces per \t
-set softtabstop=4 "number of spaces in tab when editing
+" " set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-set number
-set  mouse=a
-set showcmd " show last command used in bottom bar
-set cursorline " highlight current line
-filetype indent on "language-related indentation
+Plugin 'VundleVim/Vundle.vim'
+" " ==========PLUGINS==========
+Plugin 'kien/ctrlp.vim'
+Plugin 'bling/vim-airline'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'kien/rainbow_parentheses.vim'
+"Plugin 'Shougo/neocomplcache.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'Raimondi/delimitMate'
 
-set wildmenu "autocomplete
-set lazyredraw "redraw only when needed
+call vundle#end()									" required
+filetype plugin indent on							" required
 
-set showmatch "highlight matching {}[]()
-set incsearch "search as characters are entered
-set hlsearch "highlight matches
+" " ==========PLUGIN SETTINGS==========
 
-" move vertically by visual line
-nnoremap j gj
-nnoremap k gk
+" CtrlP settings
+:let g:ctrlp_match_window = 'bottom,order:ttb'
+:let g:ctrlp_switch_buffer = 0
+:let g:ctrlp_working_path_mode = 0
+" switch to previous tab
+:nnoremap <F5> :bp<CR>
+" switch to next tab
+:nnoremap <F6> :bn<CR>
+" close the current tab
+:nnoremap <F7> :bd<CR>
 
-" move to beginning/end of line
-nnoremap B ^
-nnoremap E $
+" vim-airline settings
+:let g:airline#extensions#tabline#enabled = 1		" enable tab extension
 
-" $/^ doesn't do anything
-nnoremap $ <nop>
-nnoremap ^ <nop>
+" NerdTree settings
+" Open NerdTree
+:nnoremap <F2> :NERDTree<CR>
+" Close NerdTree
+:nnoremap <F3> :NERDTreeClose<CR>
 
-" highlight last inserted text
-nnoremap gV `[v`]
+" Neocomplcache settings
+let g:neocomplcache_enable_at_startup = 1
 
-let mapleader="," " leader is comma
+" ==========COLORS==========
 
-"open ag.vim
-nnoremap <leader>a :Ag
+:syntax enable										" enable syntax processing
 
-"sends backup files to /tmp
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set backupskip=/tmp/*,/private/tmp/*
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set writebackup
+" ==========SPACES & TABS==========
 
-" strips trailing whitespace at the end of files. this
-" " is called on buffer write in the autogroup above.
-function! <SID>StripTrailingWhitespaces()
-	"save last search & cursor position
-	let _s=@/
-	let l = line(".")
-	let c = col(".")
-	%s/\s\+$//e
-	let @/=_s
-	call cursor(l, c)
-endfunction
+:set tabstop=4										" number of visual spaces per TAB
+:set softtabstop=4									" number of spaces in tab when editing
+:imap {<cr> {<cr>}<c-o>O
 
+" ==========UI CONFIG==========
 
+:set number											" show line numbers
+:set cc=80
+:set cursorline										" highlight current line
+:set wildmenu										" visual auto complete for command menu
+:set mouse=a
+:set showmatch										" highlight matching [({})]
+":inoremap ( ()<left>
+":inoremap { {}<left>
+":inoremap [ []<left>
+":inoremap " ""<left>
+":inoremap ' ''<left>
+
+" ==========SEARCHING==========
+
+:set incsearch										" search as characters are entered
+:set hlsearch										" highlight matches
+"turn of search highlight
+:nnoremap <leader><space> :nohlsearch<CR>
+
+" ==========FOLDING==========
+
+:set foldenable										" enable folding
+:set foldlevelstart=10								" open most folds by default
+"space open/close folds
+:nnoremap <space> za
+:set foldmethod=indent								" fold based on indent level
+
+" ==========LEADER SHORTCUTS==========
+
+:let mapleader=","									" leader is coma
